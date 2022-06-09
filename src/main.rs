@@ -1,22 +1,14 @@
-// Code for the Fifth Checkpoint
-// Tutorial: https://jesselawson.org/rust/get-started-with-rust-by-building-a-tiny-markdown-compiler/
-// 
-// The purpose of this checkpoint is to ensure that you have a complete copy
-// of the code in the tutorial up to the checkpoint. I want you to tinker and
-// explore, but to keep up with the rest of the tutorial, make sure your
-// code matches this checkpoint. 
-
 use std::path::Path;
 use std::fs::File;
 use std::io::{BufRead, BufReader};
 use std::io::Write;
 
-fn parse_markdown_file(_filename: &str) {
+fn parse_markdown_file( filename: &str) {
   print_short_banner();
   println!("[ INFO ] Starting parser!");
   
   // Create a path variable from the filename
-  let input_filename = Path::new(_filename);
+  let input_filename = Path::new( filename);
 
   // Try to open the file
   let file = File::open(&input_filename).expect("[ ERROR ] Failed to open file!");
@@ -48,11 +40,11 @@ fn parse_markdown_file(_filename: &str) {
         if htag {
           htag = false;
           s.push_str("</h1>\n"); // close it if we're already open
+        } else {
+            htag = true;
+            s.push_str("<h1>");
+            s.push_str(&slice[2..]); // Get all but the first two characters
         }
-
-        htag = true;
-        s.push_str("<h1>");
-        s.push_str(&slice[2..]); // Get all but the first two characters
       },
       
       _ => {
@@ -91,8 +83,8 @@ fn parse_markdown_file(_filename: &str) {
   }
   
   // Create an output file based on the input file, minus ".md"
-  let _output_filename = &_filename[.._filename.len()-3];
-  let mut output_filename = String::from(_output_filename);
+  let output_filename = & filename[.. filename.len()-3];
+  let mut output_filename = String::from(output_filename);
   output_filename.push_str(".html");
 
   let mut outfile = File::create(output_filename.to_string())
