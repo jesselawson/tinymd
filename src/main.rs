@@ -28,7 +28,7 @@ fn parse_markdown_file( filename: &str) {
     
     let mut first_char: Vec<char> = line_contents.chars().take(1).collect();
 
-    // Now check the first character to for headings
+    // Now check the first character for the octothorp (i.e., heading symbol)
     let mut s = String::new();
     let slice = &line_contents.to_string();
     match first_char.pop() {
